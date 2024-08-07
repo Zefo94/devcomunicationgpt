@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // Importar cors
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
@@ -6,6 +7,7 @@ const venom = require('venom-bot');
 const dotenv = require('dotenv');
 
 dotenv.config();
+app.use(cors()); // Usar cors
 app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
