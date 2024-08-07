@@ -1,8 +1,35 @@
-const { Ticket } = require('../models');
+const { Ticket, User } = require('../models');
+
+const reassignTicketAutomatically = async (ticketId) => {
+  const ticket = await Ticket.findByPk(ticketId);
+  if (!ticket) {
+    throw new Error('Ticket not found');
+  }
+
+  const availableAgents = await User.findAll({
+    where: { status: 'online', role: 'agent' }
+  });
+
+  if (availableAgents.length === 0) {
+    throw new Error('No agents available');
+  }
+
+  const assignedAgent = availableAgents[Math.floor(Math.random() * availableAgents.length)];
+  ticket.assignedTo = assignedAgent.id;
+  await ticket.save();
+  return ticket;
+};
 
 const createTicket = async (req, res) => {
   const { title, description, status, assignedTo } = req.body;
   const ticket = await Ticket.create({ title, description, status, assignedTo });
+  
+  // Reasignación automática si no se proporciona un agente asignado
+  if (!assignedTo) {
+    const reassignedTicket = await reassignTicketAutomatically(ticket.id);
+    return res.send(reassignedTicket);
+  }
+
   res.send(ticket);
 };
 
@@ -61,4 +88,5 @@ module.exports = {
   updateTicket,
   deleteTicket,
   reassignTicket,
+  reassignTicketAutomatically,
 };
