@@ -20,4 +20,19 @@ const login = async (req, res) => {
   res.send({ user, token });
 };
 
-module.exports = { register, login };
+const updateStatus = async (req, res) => {
+  const { status } = req.body;
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
+    }
+    user.status = status;
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};
+
+module.exports = { register, login, updateStatus };

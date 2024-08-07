@@ -1,15 +1,15 @@
-2024/08/06-18:05:58.615 111c Reusing MANIFEST C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/08/06-18:05:58.615 111c Recovering log #85
-2024/08/06-18:05:58.627 111c Reusing old log C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000085.log 
-2024/08/06-18:06:00.544 2cb4 Level-0 table #91: started
-2024/08/06-18:06:00.550 2cb4 Level-0 table #91: 185855 bytes OK
-2024/08/06-18:06:00.552 2cb4 Delete type=0 #85
-2024/08/06-18:06:00.552 2cb4 Manual compaction at level-0 from '\x00!\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00"\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/08/06-18:06:03.035 111c Compacting 1@1 + 2@2 files
-2024/08/06-18:06:03.145 111c Generated table #92@1: 40009 keys, 2201902 bytes
-2024/08/06-18:06:03.164 111c Generated table #93@1: 22342 keys, 441572 bytes
-2024/08/06-18:06:03.164 111c Compacted 1@1 + 2@2 files => 2643474 bytes
-2024/08/06-18:06:03.167 111c compacted to: files[ 0 0 2 0 0 0 0 ]
-2024/08/06-18:06:03.167 111c Delete type=2 #87
-2024/08/06-18:06:03.167 111c Delete type=2 #88
-2024/08/06-18:06:03.167 111c Delete type=2 #91
+2024/08/06-19:13:54.199 3108 Reusing MANIFEST C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/08/06-19:13:54.201 3108 Recovering log #95
+2024/08/06-19:13:54.228 3108 Reusing old log C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000095.log 
+2024/08/06-19:13:59.609 3108 Level-0 table #101: started
+2024/08/06-19:13:59.625 3108 Level-0 table #101: 186307 bytes OK
+2024/08/06-19:13:59.626 3108 Delete type=0 #95
+2024/08/06-19:13:59.627 3108 Manual compaction at level-0 from '\x00$\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00%\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/08/06-19:14:03.045 2dec Compacting 1@1 + 2@2 files
+2024/08/06-19:14:03.182 2dec Generated table #102@1: 37837 keys, 2198892 bytes
+2024/08/06-19:14:03.243 2dec Generated table #103@1: 27432 keys, 542770 bytes
+2024/08/06-19:14:03.244 2dec Compacted 1@1 + 2@2 files => 2741662 bytes
+2024/08/06-19:14:03.244 2dec compacted to: files[ 0 0 2 0 0 0 0 ]
+2024/08/06-19:14:03.245 2dec Delete type=2 #97
+2024/08/06-19:14:03.245 2dec Delete type=2 #98
+2024/08/06-19:14:03.245 2dec Delete type=2 #101
