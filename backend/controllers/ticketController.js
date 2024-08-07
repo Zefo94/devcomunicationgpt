@@ -7,15 +7,23 @@ const reassignTicketAutomatically = async (ticketId) => {
   }
 
   const availableAgents = await User.findAll({
-    where: { status: 'online', role: 'agent' }
+    where: { status: 'online', role: 'agent' },
+    include: [{ model: Ticket, as: 'tickets' }]
   });
 
   if (availableAgents.length === 0) {
     throw new Error('No agents available');
   }
 
-  const assignedAgent = availableAgents[Math.floor(Math.random() * availableAgents.length)];
-  ticket.assignedTo = assignedAgent.id;
+  // Encontrar el agente con menos tickets asignados
+  let agentWithLeastTickets = availableAgents[0];
+  for (const agent of availableAgents) {
+    if (agent.tickets.length < agentWithLeastTickets.tickets.length) {
+      agentWithLeastTickets = agent;
+    }
+  }
+
+  ticket.assignedTo = agentWithLeastTickets.id;
   await ticket.save();
   return ticket;
 };
@@ -34,7 +42,8 @@ const createTicket = async (req, res) => {
 };
 
 const getTickets = async (req, res) => {
-  const tickets = await Ticket.findAll();
+  const userId = req.user.id; // Asegúrate de que `req.user` contenga la información del usuario autenticado
+  const tickets = await Ticket.findAll({ where: { assignedTo: userId } });
   res.send(tickets);
 };
 

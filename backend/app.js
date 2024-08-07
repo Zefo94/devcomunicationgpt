@@ -1,23 +1,38 @@
 const express = require('express');
-const cors = require('cors'); // Importar cors
+const cors = require('cors');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const venom = require('venom-bot');
+const puppeteer = require('puppeteer');
 const dotenv = require('dotenv');
 
 dotenv.config();
-app.use(cors()); // Usar cors
+app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 
 const port = process.env.PORT || 3000;
 
-venom
-  .create({ session: 'devcomunicationgpt' })
-  .then((client) => start(client))
-  .catch((err) => console.log(err));
+(async () => {
+  const browser = await puppeteer.launch({
+    headless: 'new', // Usar la nueva implementación headless de Puppeteer
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', // Ruta al ejecutable de Chrome
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+
+  const browserWSEndpoint = await browser.wsEndpoint();
+
+  venom
+    .create({
+      session: 'devcomunicationgpt',
+      headless: true,
+      browserWSEndpoint: browserWSEndpoint,
+    })
+    .then((client) => start(client))
+    .catch((err) => console.log(err));
+})();
 
 function start(client) {
   client.onMessage((message) => {
