@@ -1,15 +1,15 @@
-2024/08/06-19:49:33.852 304c Reusing MANIFEST C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/08/06-19:49:33.853 304c Recovering log #100
-2024/08/06-19:49:33.879 304c Reusing old log C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000100.log 
-2024/08/06-19:49:38.577 2a08 Level-0 table #106: started
-2024/08/06-19:49:38.582 2a08 Level-0 table #106: 101292 bytes OK
-2024/08/06-19:49:38.584 2a08 Delete type=0 #100
-2024/08/06-19:49:38.585 2a08 Manual compaction at level-0 from '\x00%\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00&\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/08/06-19:49:42.238 304c Compacting 1@1 + 2@2 files
-2024/08/06-19:49:42.353 304c Generated table #107@1: 37001 keys, 2196983 bytes
-2024/08/06-19:49:42.381 304c Generated table #108@1: 29293 keys, 579562 bytes
-2024/08/06-19:49:42.381 304c Compacted 1@1 + 2@2 files => 2776545 bytes
-2024/08/06-19:49:42.382 304c compacted to: files[ 0 0 2 0 0 0 0 ]
-2024/08/06-19:49:42.382 304c Delete type=2 #102
-2024/08/06-19:49:42.382 304c Delete type=2 #103
-2024/08/06-19:49:42.382 304c Delete type=2 #106
+2024/08/06-21:21:53.688 1d7c Reusing MANIFEST C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/08/06-21:21:53.688 1d7c Recovering log #105
+2024/08/06-21:21:53.707 1d7c Reusing old log C:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000105.log 
+2024/08/06-21:21:58.614 2ce8 Level-0 table #111: started
+2024/08/06-21:21:58.625 2ce8 Level-0 table #111: 126521 bytes OK
+2024/08/06-21:21:58.626 2ce8 Delete type=0 #105
+2024/08/06-21:21:58.627 2ce8 Manual compaction at level-0 from '\x00&\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00'\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/08/06-21:22:02.947 1d7c Compacting 1@1 + 2@2 files
+2024/08/06-21:22:03.059 1d7c Generated table #112@1: 36435 keys, 2195175 bytes
+2024/08/06-21:22:03.085 1d7c Generated table #113@1: 30542 keys, 600197 bytes
+2024/08/06-21:22:03.085 1d7c Compacted 1@1 + 2@2 files => 2795372 bytes
+2024/08/06-21:22:03.086 1d7c compacted to: files[ 0 0 2 0 0 0 0 ]
+2024/08/06-21:22:03.086 1d7c Delete type=2 #107
+2024/08/06-21:22:03.086 1d7c Delete type=2 #108
+2024/08/06-21:22:03.086 1d7c Delete type=2 #111
