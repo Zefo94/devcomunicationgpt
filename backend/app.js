@@ -3,15 +3,20 @@ const cors = require('cors');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
+const autoResponseRoutes = require('./routes/autoResponseRoutes'); // Nueva ruta
 const venom = require('venom-bot');
 const puppeteer = require('puppeteer');
 const dotenv = require('dotenv');
+const axios = require('axios');
+const { createTicketFromMessage } = require('./controllers/ticketController');
+const { AutoResponse } = require('./models');
 
 dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/autoresponse', autoResponseRoutes);
 
 const port = process.env.PORT || 3000;
 
@@ -34,18 +39,21 @@ const port = process.env.PORT || 3000;
     .catch((err) => console.log(err));
 })();
 
-function start(client) {
-  client.onMessage((message) => {
+async function start(client) {
+  client.onMessage(async (message) => {
     console.log('Message received:', message);
     if (!message.isGroupMsg) {
-      client
-        .sendText(message.from, 'Hello from devcomunicationgpt!')
-        .then((result) => {
-          console.log('Message sent successfully:', result);
-        })
-        .catch((error) => {
-          console.error('Error when sending message:', error);
-        });
+      await createTicketFromMessage(message);
+      const autoResponse = await AutoResponse.findOne();
+      if (autoResponse) {
+        client.sendText(message.from, autoResponse.message)
+          .then((result) => {
+            console.log('Auto response sent successfully:', result);
+          })
+          .catch((error) => {
+            console.error('Error when sending auto response:', error);
+          });
+      }
     } else {
       console.log('Message does not match criteria for response');
     }

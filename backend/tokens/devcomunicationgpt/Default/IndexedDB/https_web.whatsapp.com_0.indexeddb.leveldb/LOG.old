@@ -1,3 +1,6 @@
-2024/08/07-09:06:21.214 1db8 Reusing MANIFEST c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/08/07-09:06:21.215 1db8 Recovering log #937
-2024/08/07-09:06:21.238 1db8 Reusing old log c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000937.log 
+2024/08/08-06:35:42.072 10cc Reusing MANIFEST c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/08/08-06:35:42.072 10cc Recovering log #407
+2024/08/08-06:35:42.078 10cc Reusing old log c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000407.log 
+2024/08/08-06:35:42.079 10cc Delete type=2 #406
+2024/08/08-06:35:43.828 10cc Manual compaction at level-0 from '\x00\x1d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1e\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/08/08-06:35:43.828 271c Manual compaction at level-1 from '\x00\x1d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1e\x00\x00\x00' @ 0 : 0; will stop at (end)

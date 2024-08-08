@@ -34,39 +34,21 @@ const TicketList = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      // Refresh tickets after reassignment
       const response = await axios.get('http://localhost:3000/api/tickets', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setTickets(response.data);
-      setReassignInfo((prev) => ({ ...prev, [ticketId]: '' }));
+      setReassignInfo({ ...reassignInfo, [ticketId]: '' });
     } catch (error) {
       setError('Failed to reassign ticket. Please try again later.');
     }
   };
 
-  const handleReassignChange = (ticketId, value) => {
-    setReassignInfo((prev) => ({ ...prev, [ticketId]: value }));
-  };
-
-  const handleDelete = async (ticketId) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const response = await axios.get('http://localhost:3000/api/tickets', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setTickets(response.data);
-    } catch (error) {
-      setError('Failed to delete ticket. Please try again later.');
-    }
+  const handleInputChange = (ticketId, value) => {
+    setReassignInfo({ ...reassignInfo, [ticketId]: value });
   };
 
   return (
@@ -81,10 +63,9 @@ const TicketList = () => {
               <TextField
                 label="Reassign to"
                 value={reassignInfo[ticket.id] || ''}
-                onChange={(e) => handleReassignChange(ticket.id, e.target.value)}
+                onChange={(e) => handleInputChange(ticket.id, e.target.value)}
               />
               <Button onClick={() => handleReassign(ticket.id)}>Reassign</Button>
-              <Button onClick={() => handleDelete(ticket.id)}>Delete</Button>
             </ListItem>
           ))}
         </List>

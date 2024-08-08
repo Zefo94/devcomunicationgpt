@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 const auth = async (req, res, next) => {
-  try {
-    const token = req.header('Authorization').replace('Bearer ', '');
+  const token = req.header('Authorization').replace('Bearer ', '');
+  try {    
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(decoded.id);
 
@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
       throw new Error();
     }
 
-    req.user = user; // Añade la información del usuario al request
+    req.user = user;
     next();
   } catch (error) {
     res.status(401).send({ error: 'Please authenticate.' });

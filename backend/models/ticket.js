@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Ticket.belongsTo(models.User, {
         foreignKey: 'assignedTo',
-        as: 'assignedUser'
+        as: 'agent'
       });
     }
   }
