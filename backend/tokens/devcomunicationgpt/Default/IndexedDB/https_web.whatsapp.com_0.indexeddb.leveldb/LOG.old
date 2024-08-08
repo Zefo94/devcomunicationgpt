@@ -1,6 +1,17 @@
-2024/08/08-06:35:42.072 10cc Reusing MANIFEST c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/08/08-06:35:42.072 10cc Recovering log #407
-2024/08/08-06:35:42.078 10cc Reusing old log c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000407.log 
-2024/08/08-06:35:42.079 10cc Delete type=2 #406
-2024/08/08-06:35:43.828 10cc Manual compaction at level-0 from '\x00\x1d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1e\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/08/08-06:35:43.828 271c Manual compaction at level-1 from '\x00\x1d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1e\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/08/08-07:41:42.882 2050 Reusing MANIFEST c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/08/08-07:41:42.883 2050 Recovering log #412
+2024/08/08-07:41:42.936 2050 Reusing old log c:\proyecto\devcomunicationgpt\backend\tokens\devcomunicationgpt\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000412.log 
+2024/08/08-07:41:42.937 2050 Delete type=2 #409
+2024/08/08-07:41:42.937 2050 Delete type=2 #410
+2024/08/08-07:41:45.067 2050 Level-0 table #418: started
+2024/08/08-07:41:45.079 2050 Level-0 table #418: 348177 bytes OK
+2024/08/08-07:41:45.081 2050 Delete type=0 #412
+2024/08/08-07:41:45.083 2050 Manual compaction at level-0 from '\x00\x1f\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00 \x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/08/08-07:41:45.083 2050 Manual compaction at level-1 from '\x00\x1f\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00 \x00\x00\x00' @ 0 : 0; will stop at '\x00\x1f\x00\x00\x05' @ 942717 : 1
+2024/08/08-07:41:45.083 2050 Compacting 1@1 + 2@2 files
+2024/08/08-07:41:45.226 2050 Generated table #419@1: 43416 keys, 2205493 bytes
+2024/08/08-07:41:45.278 2050 Generated table #420@1: 17178 keys, 369518 bytes
+2024/08/08-07:41:45.278 2050 Compacted 1@1 + 2@2 files => 2575011 bytes
+2024/08/08-07:41:45.281 2050 compacted to: files[ 0 0 2 0 0 0 0 ]
+2024/08/08-07:41:45.282 2050 Delete type=2 #418
+2024/08/08-07:41:45.283 2050 Manual compaction at level-1 from '\x00\x1f\x00\x00\x05' @ 942717 : 1 .. '\x00 \x00\x00\x00' @ 0 : 0; will stop at (end)

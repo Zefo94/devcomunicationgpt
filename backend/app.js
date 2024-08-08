@@ -1,9 +1,18 @@
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const { Server } = require('socket.io');
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3001", // Reemplaza con la URL de tu frontend si es diferente
+    methods: ["GET", "POST"]
+  }
+});
 const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
-const autoResponseRoutes = require('./routes/autoResponseRoutes'); // Nueva ruta
+const autoResponseRoutes = require('./routes/autoResponseRoutes');
 const venom = require('venom-bot');
 const puppeteer = require('puppeteer');
 const dotenv = require('dotenv');
@@ -20,10 +29,17 @@ app.use('/api/autoresponse', autoResponseRoutes);
 
 const port = process.env.PORT || 3000;
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 (async () => {
   const browser = await puppeteer.launch({
-    headless: 'new', // Usar la nueva implementación headless de Puppeteer
-    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', // Ruta al ejecutable de Chrome
+    headless: 'new',
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
@@ -43,7 +59,8 @@ async function start(client) {
   client.onMessage(async (message) => {
     console.log('Message received:', message);
     if (!message.isGroupMsg) {
-      await createTicketFromMessage(message);
+      const ticket = await createTicketFromMessage(message);
+      io.emit('newTicket', ticket); // Emitir evento de nuevo ticket
       const autoResponse = await AutoResponse.findOne();
       if (autoResponse) {
         client.sendText(message.from, autoResponse.message)
@@ -60,6 +77,6 @@ async function start(client) {
   });
 }
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

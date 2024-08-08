@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import socket from '../socket';
 import { List, ListItem, ListItemText, Button, TextField } from '@mui/material';
 
 const TicketList = () => {
@@ -22,8 +23,16 @@ const TicketList = () => {
       }
     };
     fetchTickets();
-  }, []);
+    // Escuchar eventos de nuevos tickets
+    socket.on('newTicket', (ticket) => {
+      setTickets((prevTickets) => [...prevTickets, ticket]);
+    });
 
+    return () => {
+      socket.off('newTicket');
+    };
+  }, []);
+  
   const handleReassign = async (ticketId) => {
     try {
       const token = localStorage.getItem('token');
