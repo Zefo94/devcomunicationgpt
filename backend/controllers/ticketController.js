@@ -1,4 +1,4 @@
-const { Ticket, User, Message } = require('../models');
+const { Ticket, User, Message, AutoResponse } = require('../models');
 
 const reassignTicketAutomatically = async (ticketId) => {
   const ticket = await Ticket.findByPk(ticketId);
@@ -42,21 +42,36 @@ const createTicket = async (req, res) => {
 };
 
 const createTicketFromMessage = async (message) => {
-  const ticket = await Ticket.create({
-    title: `Ticket from ${message.sender.pushname}`,
-    description: message.body,
-    status: 'open',
-    assignedTo: null,
+  const existingTicket = await Ticket.findOne({
+    where: {
+      from: message.from,
+      status: 'open'
+    }
   });
 
-  await Message.create({
-    ticketId: ticket.id,
-    from: message.from,
-    body: message.body
-  });
-
-  await reassignTicketAutomatically(ticket.id);
-  return ticket;
+  if (existingTicket) {
+    await Message.create({
+      ticketId: existingTicket.id,
+      from: message.from,
+      body: message.body
+    });
+    return existingTicket;
+  } else {
+    const ticket = await Ticket.create({
+      title: `Ticket from ${message.sender.pushname}`,
+      description: message.body,
+      status: 'open',
+      from: message.from, // Incluir el campo 'from'
+      from: message.from
+    });
+    await Message.create({
+      ticketId: ticket.id,
+      from: message.from,
+      body: message.body
+    });
+    await reassignTicketAutomatically(ticket.id);
+    return ticket;
+  }
 };
 
 const getTickets = async (req, res) => {
@@ -120,13 +135,12 @@ const setAutoResponse = async (req, res) => {
 
 module.exports = {
   createTicket,
-  //createTicketFromMessage,
+  createTicketFromMessage,
   getTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
   reassignTicket,
   reassignTicketAutomatically,
-  createTicketFromMessage, // Exporta la función
   setAutoResponse,
 };

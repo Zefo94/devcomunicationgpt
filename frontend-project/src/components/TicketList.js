@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import socket from '../socket';
 import { List, ListItem, ListItemText, Button, TextField } from '@mui/material';
+import { io } from 'socket.io-client';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [error, setError] = useState(null);
   const [reassignInfo, setReassignInfo] = useState({});
+  const [audio] = useState(new Audio('/notification.mp3')); // Ruta al archivo de sonido
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -23,16 +24,18 @@ const TicketList = () => {
       }
     };
     fetchTickets();
-    // Escuchar eventos de nuevos tickets
+
+    const socket = io('http://localhost:3000'); // Conexión al servidor de sockets
     socket.on('newTicket', (ticket) => {
       setTickets((prevTickets) => [...prevTickets, ticket]);
+      audio.play(); // Reproducir sonido cuando llega un nuevo ticket
     });
 
     return () => {
       socket.off('newTicket');
     };
-  }, []);
-  
+  }, [audio]);
+
   const handleReassign = async (ticketId) => {
     try {
       const token = localStorage.getItem('token');
