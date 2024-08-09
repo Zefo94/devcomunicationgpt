@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, ListItem, ListItemText, Button, TextField } from '@mui/material';
+import { List, ListItem, ListItemText, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { io } from 'socket.io-client';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [error, setError] = useState(null);
   const [reassignInfo, setReassignInfo] = useState({});
-  const [audio] = useState(new Audio('/notification.mp3')); // Ruta al archivo de sonido
+  const [audio] = useState(new Audio('/notification.mp3')); // Inicializar el audio
+  const [userInteracted, setUserInteracted] = useState(false); // Estado para verificar la interacción del usuario
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -25,16 +26,18 @@ const TicketList = () => {
     };
     fetchTickets();
 
-    const socket = io('http://localhost:3000'); // Conexión al servidor de sockets
+    const socket = io('http://localhost:3000');
     socket.on('newTicket', (ticket) => {
       setTickets((prevTickets) => [...prevTickets, ticket]);
-      audio.play(); // Reproducir sonido cuando llega un nuevo ticket
+      if (userInteracted) {
+        audio.play().catch((error) => console.log('Failed to play audio:', error));
+      }
     });
 
     return () => {
       socket.off('newTicket');
     };
-  }, [audio]);
+  }, [audio, userInteracted]);
 
   const handleReassign = async (ticketId) => {
     try {
@@ -63,8 +66,24 @@ const TicketList = () => {
     setReassignInfo({ ...reassignInfo, [ticketId]: value });
   };
 
+  const handleUserInteraction = () => {
+    setUserInteracted(true);
+    audio.play().catch((error) => console.log('Failed to play audio:', error)); // Intentar reproducir el audio inmediatamente después de la interacción del usuario
+  };
+
   return (
     <div>
+      <Dialog open={!userInteracted} onClose={handleUserInteraction}>
+        <DialogTitle>Welcome</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please click "Continue" to enable notifications for new tickets.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleUserInteraction} color="primary">Continue</Button>
+        </DialogActions>
+      </Dialog>
       {error ? (
         <p>{error}</p>
       ) : (

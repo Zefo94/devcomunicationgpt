@@ -7,6 +7,7 @@ const CreateTicket = () => {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
+  const [from, setFrom] = useState(''); // Nuevo estado para el campo 'from'
   const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
@@ -18,6 +19,7 @@ const CreateTicket = () => {
         description,
         status,
         assignedTo,
+        from, // Incluir el campo 'from' en la solicitud
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,6 +30,7 @@ const CreateTicket = () => {
       setDescription('');
       setStatus('');
       setAssignedTo('');
+      setFrom(''); // Limpiar el campo 'from'
     } catch (error) {
       setError('Failed to create ticket. Please try again later.');
     }
@@ -55,6 +58,11 @@ const CreateTicket = () => {
         value={assignedTo}
         onChange={(e) => setAssignedTo(e.target.value)}
       />
+      <TextField
+        label="From"
+        value={from}
+        onChange={(e) => setFrom(e.target.value)}
+      /> {/* Nuevo campo de entrada para 'from' */}
       <Button type="submit">Create Ticket</Button>
       {error && <p>{error}</p>}
     </form>

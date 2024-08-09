@@ -45,3 +45,5 @@ ehthumbs.db
 
 # React Native
 .expo/
+
+backend/tokens/

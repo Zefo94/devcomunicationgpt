@@ -29,16 +29,13 @@ const reassignTicketAutomatically = async (ticketId) => {
 };
 
 const createTicket = async (req, res) => {
-  const { title, description, status, assignedTo } = req.body;
-  const ticket = await Ticket.create({ title, description, status, assignedTo });
-  
-  // Reasignación automática si no se proporciona un agente asignado
-  if (!assignedTo) {
-    const reassignedTicket = await reassignTicketAutomatically(ticket.id);
-    return res.send(reassignedTicket);
+  const { title, description, status, assignedTo, from } = req.body; // Añadir 'from' aquí
+  try {
+    const ticket = await Ticket.create({ title, description, status, assignedTo, from }); // Incluir 'from' en la creación
+    res.send(ticket);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
   }
-
-  res.send(ticket);
 };
 
 const createTicketFromMessage = async (message) => {
@@ -61,8 +58,8 @@ const createTicketFromMessage = async (message) => {
       title: `Ticket from ${message.sender.pushname}`,
       description: message.body,
       status: 'open',
-      from: message.from, // Incluir el campo 'from'
-      from: message.from
+      from: message.from,
+      assignedTo: null
     });
     await Message.create({
       ticketId: ticket.id,
