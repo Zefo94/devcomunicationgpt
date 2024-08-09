@@ -1,19 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const ticketController = require('../controllers/ticketController');
+const closeTicket = require('../controllers/tickets/closeTicket');
 const auth = require('../middleware/auth');
 
-// Ruta para reasignar un ticket
-router.post('/reassign/:id', auth, ticketController.reassignTicket);
+const createTicket = require('../controllers/tickets/createTicket');
+const createTicketFromMessage = require('../controllers/tickets/createTicketFromMessage');
+const getTickets = require('../controllers/tickets/getTickets');
+const getTicketById = require('../controllers/tickets/getTicketById');
+const updateTicket = require('../controllers/tickets/updateTicket');
+const deleteTicket = require('../controllers/tickets/deleteTicket');
+const reassignTicket = require('../controllers/tickets/reassignTicket');
+const setAutoResponse = require('../controllers/tickets/setAutoResponse');
+
 
 // Rutas para CRUD de tickets
-router.post('/', auth, ticketController.createTicket);
-router.get('/', auth, ticketController.getTickets);
-router.get('/:id', auth, ticketController.getTicketById);
-router.put('/:id', auth, ticketController.updateTicket);
-router.delete('/:id', auth, ticketController.deleteTicket);
+router.post('/', auth, createTicket);
+router.get('/', auth, getTickets);
+router.get('/:id', auth, getTicketById);
+router.put('/:id', auth, updateTicket);
+router.delete('/:id', auth, deleteTicket);
+router.put('/:id/close', auth, closeTicket);
 
-//Rura para  configurar el mensaje de auto respuesta
-router.post('/setAutoResponse', auth, ticketController.setAutoResponse)
+// Rutas para reasignar y auto respuesta
+router.post('/reassign/:id', auth, reassignTicket);
+router.post('/setAutoResponse', auth, setAutoResponse);
 
 module.exports = router;

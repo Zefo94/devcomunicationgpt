@@ -19,13 +19,14 @@ const TicketList = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setTickets(response.data);
+        const openTickets = response.data.filter(ticket => ticket.status !== 'closed');
+        setTickets(openTickets);
       } catch (error) {
         setError('Failed to load tickets. Please try again later.');
       }
     };
     fetchTickets();
-
+  
     const socket = io('http://localhost:3000');
     socket.on('newTicket', (ticket) => {
       setTickets((prevTickets) => [...prevTickets, ticket]);
@@ -33,11 +34,11 @@ const TicketList = () => {
         audio.play().catch((error) => console.log('Failed to play audio:', error));
       }
     });
-
+  
     return () => {
       socket.off('newTicket');
     };
-  }, [audio, userInteracted]);
+  }, [audio, userInteracted]);  
 
   const handleReassign = async (ticketId) => {
     try {
@@ -59,6 +60,22 @@ const TicketList = () => {
       setReassignInfo({ ...reassignInfo, [ticketId]: '' });
     } catch (error) {
       setError('Failed to reassign ticket. Please try again later.');
+    }
+  };
+
+  const handleCloseTicket = async (ticketId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(`http://localhost:3000/api/tickets/${ticketId}/close`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Actualizar la lista de tickets después de cerrar uno
+      setTickets(prevTickets => prevTickets.filter(ticket => ticket.id !== ticketId));
+    } catch (error) {
+      setError('Failed to close the ticket. Please try again later.');
     }
   };
 
@@ -97,6 +114,8 @@ const TicketList = () => {
                 onChange={(e) => handleInputChange(ticket.id, e.target.value)}
               />
               <Button onClick={() => handleReassign(ticket.id)}>Reassign</Button>
+              {/* Botón para cerrar el ticket */}
+              <Button onClick={() => handleCloseTicket(ticket.id)}>Close Ticket</Button>
             </ListItem>
           ))}
         </List>

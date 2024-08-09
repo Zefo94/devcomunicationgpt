@@ -6,29 +6,35 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001", // Reemplaza con la URL de tu frontend si es diferente
+    origin: "http://localhost:3001",
     methods: ["GET", "POST"]
   }
 });
+
+// Importar rutas
 const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const autoResponseRoutes = require('./routes/autoResponseRoutes');
+const createTicketFromMessage = require('./controllers/tickets/createTicketFromMessage');
+const { AutoResponse } = require('./models');
 const venom = require('venom-bot');
 const puppeteer = require('puppeteer');
 const dotenv = require('dotenv');
-const axios = require('axios');
-const { createTicketFromMessage } = require('./controllers/ticketController');
-const { AutoResponse } = require('./models');
+
 
 dotenv.config();
+
 app.use(cors());
 app.use(express.json());
+
+// Usar las rutas
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/autoresponse', autoResponseRoutes);
 
 const port = process.env.PORT || 3000;
 
+// Configurar socket.io
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
@@ -51,7 +57,15 @@ io.on('connection', (socket) => {
       headless: true,
       browserWSEndpoint: browserWSEndpoint,
     })
-    .then((client) => start(client))
+    .then((client) => {
+      // Middleware para que el cliente Venom esté disponible en todas las solicitudes
+      app.use((req, res, next) => {
+        req.io = io;  // Asegurarse de que el objeto io esté disponible en las solicitudes
+        req.client = client;  // Asegurarse de que el cliente Venom esté disponible en las solicitudes
+        next();
+      });
+      start(client);
+    })
     .catch((err) => console.log(err));
 })();
 
